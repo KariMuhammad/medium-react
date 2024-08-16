@@ -54,3 +54,12 @@ export const getBlogsByTag = async ({ page = 1, tag }) => {
     throw error;
   }
 };
+
+export const search = async ({ query, page = 1 }) => {
+  try {
+    const response = await endpoint.get(`/search?q=${query}&page=${page}`);
+    return response.data;
+  } catch ({ response }) {
+    console.log(response.errors);
+  }
+};

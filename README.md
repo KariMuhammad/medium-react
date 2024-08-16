@@ -23,5 +23,7 @@ This project is a clone of the Medium blog website. It is a full-stack project t
   - ![alt text](demo/blog.png)
 - Home page
 - ![alt text](demo/home.png)
+- Search Page
+- ![alt text](demo/search.png)
 - List of articles
 - Pagination

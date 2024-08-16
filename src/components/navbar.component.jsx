@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/auth-context";
 import logo from "../imgs/logo.png";
 
 import UserNavigationPanel from "./user-navigation.component";
+import { search } from "../services/blog-endpoints";
 
 const Navbar = () => {
+  const authContext = useAuth();
   const [visibleSearchBox, setVisibleSearchBox] = useState("hide");
   const [visibleUserPanel, setVisibleUserPanel] = useState(false);
-  const authContext = useAuth();
+
+  const navigate = useNavigate();
 
   const toggleSearchBox = () => {
     setVisibleSearchBox((state) => (state === "hide" ? "show" : "hide"));
@@ -17,6 +20,14 @@ const Navbar = () => {
 
   const togglePanel = () => setVisibleUserPanel((state) => !state);
   const hidePanel = () => setVisibleUserPanel(false);
+
+  const handleSearch = (e) => {
+    const query = e.target.value;
+
+    if (query && e.key === "Enter") {
+      navigate(`/search?q=${query}`);
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -32,6 +43,7 @@ const Navbar = () => {
             type="text"
             placeholder="Search"
             className="w-full p-4 px-12 rounded-full bg-grey"
+            onKeyDown={handleSearch}
           />
 
           <i className="search-icon fi fi-rr-search text-xl text-dark-grey absolute top-1/2 left-[90%] -translate-y-1/2 md:left-4"></i>
