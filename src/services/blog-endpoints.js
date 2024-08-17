@@ -63,3 +63,14 @@ export const search = async ({ query, page = 1 }) => {
     console.log(response.errors);
   }
 };
+
+export const getBlogsOfUser = async ({ page = 1, user_id }) => {
+  try {
+    const response = await endpoint.get(`/blogs/user/${user_id}?page=${page}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw error;
+  }
+};

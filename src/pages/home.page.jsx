@@ -38,9 +38,10 @@ const HomePage = ({}) => {
     });
   };
 
-  const fetchBlogsByTag = ({ page = 1, append = false }) => {
-    console.log(pageState);
-    getBlogsByTag({ tag: pageState, page: page }).then((data) => {
+  const fetchBlogsByTag = ({ page = 1, append = false, tag = pageState }) => {
+    console.log(tag);
+
+    getBlogsByTag({ tag, page }).then((data) => {
       if (append)
         setData((prev) => ({
           blogs: [...prev.blogs, ...data.blogs],
@@ -48,6 +49,14 @@ const HomePage = ({}) => {
         }));
       else setData(data);
     });
+  };
+
+  const loadDataByTag = (tag) => (e) => {
+    tag = tag.toLowerCase();
+    if (pageState === tag) return setPageState("home");
+
+    setData(null);
+    setPageState(tag);
   };
 
   let fetchMore = useCallback(() => {
@@ -64,18 +73,9 @@ const HomePage = ({}) => {
     if (!trendingBlogs) fetchTrendingBlogs();
   }, [pageState]);
 
-  const loadDataByTag = (tag) => (e) => {
-    tag = tag.toLowerCase();
-    if (pageState === tag) return setPageState("home");
-
-    setData(null);
-    setPageState(tag);
-  };
-
   const { blogs } = data || {};
 
   console.log(data);
-  console.log(fetchMore);
 
   return (
     <AnimationWrapper>

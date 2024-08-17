@@ -7,6 +7,7 @@ import BaseLayout from "./layouts/base-layout";
 import HomePage from "./pages/home.page";
 import SearchPage from "./pages/search.page";
 import NotFoundPage from "./pages/404.page";
+import UserProfile from "./pages/profile.page";
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
             <Route path="sign-in" element={<UserAuthForm type="sign-in" />} />
             <Route path="sign-up" element={<UserAuthForm type="sign-up" />} />
           </Route>
+
+          <Route path="user/:userId" element={<UserProfile />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

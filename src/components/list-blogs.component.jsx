@@ -4,7 +4,7 @@ import LoadMoreButton from "./load-more.component";
 import Loader from "./loader.component";
 import NoDataMessage from "./nodata.component";
 
-const ListBlogs = ({ blogs, pagination, fetchMore }) => {
+const ListBlogs = ({ blogs, pagination, fetchMore, user_id }) => {
   return (
     <div className="home-blogs">
       {blogs &&
@@ -22,7 +22,10 @@ const ListBlogs = ({ blogs, pagination, fetchMore }) => {
       )}
 
       {pagination && (
-        <LoadMoreButton pagination={pagination} fetchMoreFn={fetchMore()} />
+        <LoadMoreButton
+          pagination={pagination}
+          fetchMoreFn={user_id ? fetchMore(user_id) : fetchMore()}
+        />
       )}
     </div>
   );

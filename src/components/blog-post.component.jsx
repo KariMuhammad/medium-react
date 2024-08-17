@@ -10,17 +10,19 @@ const BlogPostCard = ({ content, author }) => {
     tags,
     activity: { total_likes },
   } = content;
-  const { fullname, profile_img } = author;
+  const { fullname, profile_img, username } = author;
 
   const formatedDate = date.format(new Date(publishedAt), "MMM DD");
   return (
     <Link className="flex gap-8 items-center justify-between border-b border-grey pb-5 mb-5">
       <div className="w-full">
-        <div className="my-4 flex items-center gap-1">
-          <img src={profile_img} className="w-6 h-6 rounded-full" />
+        <Link to={`user/${username}`}>
+          <div className="my-4 flex items-center gap-1">
+            <img src={profile_img} className="w-6 h-6 rounded-full" />
 
-          <p className="text-sm text-gelasio line-clamp-1">{fullname} </p>
-        </div>
+            <p className="text-sm text-gelasio line-clamp-1">{fullname} </p>
+          </div>
+        </Link>
 
         <h1 className="blog-title my-4">{title}</h1>
 

@@ -2,6 +2,8 @@ const LoadMoreButton = ({ pagination, fetchMoreFn }) => {
   if (!pagination.nextPage || pagination.nextPage > pagination.totalPages)
     return null;
 
+  console.log(pagination);
+
   return (
     <div className="flex justify-center">
       <button
