@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { getBlogBySlug } from "../services/blog-endpoints";
 
 const BlogStructure = {
   blog: {
@@ -23,12 +24,28 @@ const BlogStructure = {
  */
 export const BlogContext = createContext(BlogStructure);
 
-export default function BlogProvider({ value, children }) {
+/**
+ * blog_id is undefined if we create a new blog, but it will be defined if we are editing a blog
+ * @param {*} param0
+ * @returns
+ */
+export default function BlogProvider({ value, children, blog_id = null }) {
   const [blog, setBlog] = useState(BlogStructure.blog);
 
   // const updateBlog = (key, value) => {
   //   setBlog((prev) => ({ ...prev, [key]: value }))};
   // }
+
+  useEffect(() => {
+    if (!blog_id) return;
+
+    // fetch blog data from server
+    getBlogBySlug(blog_id).then((data) => {
+      console.log("--", data.blog._doc);
+
+      setBlog(data.blog._doc);
+    });
+  }, [blog_id]);
 
   console.log(blog);
 

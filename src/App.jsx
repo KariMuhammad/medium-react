@@ -8,6 +8,7 @@ import HomePage from "./pages/home.page";
 import SearchPage from "./pages/search.page";
 import NotFoundPage from "./pages/404.page";
 import UserProfile from "./pages/profile.page";
+import Blog from "./pages/blog.page";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
 
           <Route path="editor" element={<AuthLayout />}>
             <Route index element={<EditorPage />} />
+            <Route path=":blog_id/edit" element={<EditorPage />} />
           </Route>
 
           <Route path="auth" element={<Outlet />}>
@@ -27,6 +29,7 @@ const App = () => {
           </Route>
 
           <Route path="user/:userId" element={<UserProfile />} />
+          <Route path="blog/:id" element={<Blog />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

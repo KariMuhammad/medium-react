@@ -9,6 +9,9 @@ import Marker from "@editorjs/marker";
 import Quote from "@editorjs/quote";
 import { StyleInlineTool } from "editorjs-style";
 import uploadImage from "../services/upload-image";
+import CodeBox from "@bomdi/codebox";
+
+import config from "../config";
 
 const uploadImageByUrl = (url) => {
   console.log(url);
@@ -39,7 +42,12 @@ const uploadImageByFile = (image) => {
 };
 
 const tools = {
-  code: Code,
+  code: {
+    class: CodeBox,
+    config: {
+      useDefaultTheme: "light",
+    },
+  },
   embed: Embed,
   header: {
     class: Header,
@@ -51,6 +59,12 @@ const tools = {
   },
   image: {
     class: Image,
+    config: {
+      uploader: {
+        uploadByFile: uploadImageByFile,
+        uploadByUrl: uploadImageByUrl,
+      },
+    },
   },
   inlineCode: InlineCode,
   link: Link,
@@ -75,6 +89,58 @@ const tools = {
         { name: "Blue", class: "blue" },
         { name: "Green", class: "green" },
       ],
+    },
+  },
+};
+
+export const readOnlyTools = {
+  embed: Embed,
+  header: {
+    class: Header,
+    config: {
+      placeholder: "Enter a heading",
+      levels: [2, 3, 4],
+      defaultLevel: 2,
+      readOnly: true,
+    },
+  },
+  image: {
+    class: Image,
+    config: {
+      uploader: {
+        uploadByFile: uploadImageByFile,
+        uploadByUrl: uploadImageByUrl,
+      },
+      readOnly: true,
+    },
+  },
+  inlineCode: InlineCode,
+  link: Link,
+  list: {
+    class: List,
+    inlineToolbar: true,
+    readOnly: true,
+  },
+  marker: {
+    class: Marker,
+    readOnly: true,
+  },
+  quote: {
+    class: Quote,
+    inlineToolbar: true,
+    readOnly: true,
+  },
+  style: {
+    class: StyleInlineTool,
+    config: {
+      classList: [
+        { name: "Normal", class: "" },
+        { name: "Large", class: "large" },
+        { name: "Red", class: "red" },
+        { name: "Blue", class: "blue" },
+        { name: "Green", class: "green" },
+      ],
+      readOnly: true,
     },
   },
 };

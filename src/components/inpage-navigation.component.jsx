@@ -33,9 +33,9 @@ const InPageNavigation = ({ headings, hiddens, children }) => {
         {headings.map((heading, i) => {
           return (
             <button
+              key={i}
               ref={active === i ? activeButtonRef : null}
               onClick={(e) => handleChangeHeading(e.target, i)}
-              key={i}
               className={clsx({
                 "p-4 bx-5 capitalize": true,
                 "text-black": active === i,

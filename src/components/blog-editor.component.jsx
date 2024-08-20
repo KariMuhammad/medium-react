@@ -6,13 +6,19 @@ import { useBlog } from "../context/blog-context";
 import { useEffect } from "react";
 import tools from "./tools.component";
 
+export let editor;
+
 export default function BlogEditor() {
   const {
+    blog,
     blog: { banner, title, content },
     setBlog,
     blogEditor,
     setBlogEditor,
+    blog_id,
   } = useBlog();
+
+  console.log("ID", blog_id, "Blog", blog);
 
   const uploadImageFile = (e) => {
     const file = e.target.files[0];
@@ -46,17 +52,19 @@ export default function BlogEditor() {
   };
 
   useEffect(() => {
-    if (blogEditor.isReady) return;
+    // if (blogEditor.isReady) return;
 
-    const editor = new EditorJS({
+    editor = new EditorJS({
       holder: "editor-content",
-      data: content,
       placeholder: "Write something awesome...",
+      data: { blocks: content },
       tools: tools,
     });
 
     setBlogEditor(editor);
   }, []);
+
+  if (blog_id) editor?.isReady.then(() => editor.render({ blocks: content }));
 
   return (
     <section className="editor">

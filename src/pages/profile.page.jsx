@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getProfileUser } from "../services/users-endpoints";
 import AnimationWrapper from "../common/page-animation";
-import date from "date-and-time";
 import ListBlogs from "../components/list-blogs.component";
 import { getBlogsOfUser } from "../services/blog-endpoints";
+import InPageNavigation from "../components/inpage-navigation.component";
+import AboutUser from "../components/about.component";
 
 const UserStructure = {
   personal_info: {
@@ -30,7 +31,7 @@ const UserProfile = () => {
     (user_id) =>
     ({ page, append = false }) => {
       console.log("page", page);
-      getBlogsOfUser({ user_id, page }).then((data) => {
+      getBlogsOfUser({ user_id, limit: 7, page }).then((data) => {
         setData((prev) => {
           const _data = data.blogs;
           if (append) {
@@ -62,18 +63,29 @@ const UserProfile = () => {
 
   return (
     <AnimationWrapper>
-      <section className="md:flex md:flex-row md:gap-16">
+      <section className="flex flex-col flex-col-reverse md:flex-row md:gap-16">
         <div className="blogs-content w-full">
-          <h2 className="text-center md:text-left">Blogs</h2>
           <div className="blogs">
-            {data && data.blogs && (
-              <ListBlogs
-                blogs={data.blogs}
-                pagination={data.pagination}
-                fetchMore={fetchBlogs}
-                user_id={profileData?.id}
+            <InPageNavigation
+              headings={["Blogs Published", "About"]}
+              hiddens={["About"]}
+            >
+              {data && data.blogs && (
+                <ListBlogs
+                  blogs={data.blogs}
+                  pagination={data.pagination}
+                  fetchMore={fetchBlogs}
+                  user_id={profileData?.id}
+                />
+              )}
+
+              <AboutUser
+                bio={bio}
+                joinedAt={joinedAt}
+                social_links={social_links}
+                isHide={false}
               />
-            )}
+            </InPageNavigation>
           </div>
         </div>
         <div className="user-info min-w-[40%] md:max-w-[250px] flex flex-col text-center md:block md:text-left">
@@ -95,34 +107,12 @@ const UserProfile = () => {
             </div>
           </div>
 
-          <div className="user-info_bio">
-            <h3>Bio</h3>
-            <p className="text-center md:text-left line-clamp-3">{bio}</p>
-          </div>
-
-          <div className="user-info__social">
-            <h3>Social Links</h3>
-            <div className="links leading-10 flex gap-4 justify-center">
-              {social_links &&
-                Object.keys(social_links).map(
-                  (key) =>
-                    social_links[key] && (
-                      <Link key={key} to={social_links[key]}>
-                        <i
-                          className={`fi fi-brands-${key} text-2xl hover:text-black`}
-                        ></i>
-                      </Link>
-                    )
-                )}
-            </div>
-          </div>
-
-          <div className="user-info_joined-at">
-            <h4 className="text-2xl font-medium">Joined At</h4>
-            <p className="text-dark-grey">
-              {date.format(new Date(joinedAt), "DD[th] MMMM, YYYY")}
-            </p>
-          </div>
+          <AboutUser
+            bio={bio}
+            joinedAt={joinedAt}
+            social_links={social_links}
+            isHide={true}
+          />
         </div>
       </section>
     </AnimationWrapper>
