@@ -15,6 +15,10 @@ const BlogInteraction = () => {
     user.user.personal_info.username ===
     blogDetails.blog.author.personal_info.username;
 
+  const handleComment = () => {
+    blogDetails.setCommentPanel((prev) => !prev);
+  };
+
   return (
     <div className="blog-interaction my-7">
       <hr className="border-b border-grey" />
@@ -26,7 +30,10 @@ const BlogInteraction = () => {
             blogId={blogDetails.blog._id}
             blog={blogDetails.blog}
           />
-          <Comment count={blogDetails.blog.comments.length} />
+          <Comment
+            count={blogDetails.blog.activity.total_comments}
+            onClick={handleComment}
+          />
         </div>
 
         <div className="blog-stats-r flex items-center gap-4">

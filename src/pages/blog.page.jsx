@@ -9,6 +9,7 @@ import BlogDetailsProvider from "../context/blog-details-context";
 import BlogInteraction from "../components/blog-interaction.component";
 import ListBlogs from "../components/list-blogs.component";
 import { readOnlyTools } from "../components/tools.component";
+import CommentWrapper from "../components/comments.component";
 
 const BlogStructure = {
   title: "",
@@ -22,12 +23,14 @@ const BlogStructure = {
 };
 
 const Blog = () => {
+  const { id } = useParams();
   const blogContentRef = useRef(null);
   const [_, setRender] = useState(0);
-  const { id } = useParams();
   const [blog, setBlog] = useState(BlogStructure);
   const [similarBlogs, setSimilarBlogs] = useState([]);
   const [userBlogs, setUserBlogs] = useState([]);
+  const [commentPanel, setCommentPanel] = useState(true);
+
   console.log("S", similarBlogs);
 
   const triggerReRender = () => {
@@ -87,7 +90,11 @@ const Blog = () => {
 
   return (
     <AnimationWrapper>
-      <BlogDetailsProvider value={{ blog, setBlog }}>
+      <BlogDetailsProvider
+        value={{ blog, setBlog, commentPanel, setCommentPanel }}
+      >
+        <CommentWrapper />
+
         <div className="max-w-[900px] center py-10 max-lg:px-[5vw]">
           <div className="blog_banner">
             <img src={banner} />
