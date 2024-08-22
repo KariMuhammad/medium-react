@@ -4,16 +4,28 @@ import CommentField from "./comment-field.component";
 import CommentCard from "./comment-card.component";
 import { useEffect, useState } from "react";
 import { getComments } from "../services/comment-endpoints";
+import LoadMoreButton from "./load-more.component";
 
 const CommentWrapper = () => {
   const { blog, commentPanel, setCommentPanel } = useBlogDetails();
-  const [comments, setComments] = useState([]);
+  const [data, setData] = useState([]);
+
+  const fetchMoreComments = async ({ page, append }) => {
+    const _data = await getComments({ blog_id: blog._id, page });
+    setData((prev) => ({
+      pagination: _data.pagination,
+      comments: append ? [..._data.comments, ...prev.comments] : _data.comments,
+    }));
+  };
 
   useEffect(() => {
-    getComments(blog._id).then((comments) => {
-      setComments(comments.data);
+    getComments({ blog_id: blog._id }).then((data) => {
+      setData(data);
     });
   }, []);
+
+  console.log("Data", data);
+  const { comments = [] } = data;
 
   return (
     <div
@@ -56,7 +68,7 @@ const CommentWrapper = () => {
         <CommentField
           blog_id={blog._id}
           action="comment"
-          setComments={setComments}
+          setComments={setData}
         />
       </div>
 
@@ -66,11 +78,18 @@ const CommentWrapper = () => {
             <CommentCard
               key={comment._id}
               comment={comment}
-              setComments={setComments}
+              setComments={setData}
               author={comment.commented_by.personal_info || {}}
             />
           ))}
       </div>
+
+      {data.pagination && data.pagination.totalPages > 1 && (
+        <LoadMoreButton
+          pagination={data.pagination}
+          fetchMoreFn={fetchMoreComments}
+        />
+      )}
     </div>
   );
 };

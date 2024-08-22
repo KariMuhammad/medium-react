@@ -10,7 +10,11 @@ const CommentField = ({ action, blog_id, setComments }) => {
       return createComment({ blog_id, data: { content: comment } })
         .then((data) => {
           toast.success("Comment added successfully");
-          setComments(data.data);
+          console.log("Data", data);
+          setComments((prev) => ({
+            comments: [data.comment._doc, ...prev.comments],
+            pagination: data.pagination,
+          }));
           setComment("");
         })
         .catch((errors) => {

@@ -17,16 +17,16 @@ export const createComment = async ({ blog_id, data }) => {
       },
     });
     console.log(response.data);
-    return response.data;
+    return response.data.data;
   } catch ({ response: { data } }) {
     throw data.errors;
   }
 };
 
-export const getComments = async (blog_id) => {
+export const getComments = async ({ blog_id, page = 1 }) => {
   try {
-    const response = await endpoint.get(`/comments/${blog_id}`);
-    return response.data;
+    const response = await endpoint.get(`/comments/${blog_id}?page=${page}`);
+    return response.data.data;
   } catch (error) {
     console.log(error);
   }
@@ -44,9 +44,15 @@ export const createReply = async ({ comment_id, data }) => {
       }
     );
 
-    console.log(response.data);
-    return response.data;
+    return response.data.data;
   } catch ({ response: { data } }) {
     throw data.errors;
+  }
+};
+
+export const likeCommentOrReply = async ({ id }) => {
+  try {
+  } catch (error) {
+    console.log(error);
   }
 };

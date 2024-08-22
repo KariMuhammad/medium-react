@@ -35,3 +35,7 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 - ![alt text](demo/edit-article.png)
 - List of articles
 - Pagination
+
+## Some Refactors
+
+1. Done Pagination for Comments and Show/Hide Replies
