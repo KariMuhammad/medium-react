@@ -2,7 +2,7 @@ import clsx from "clsx";
 import date from "date-and-time";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { createReply } from "../services/comment-endpoints";
+import { createReply, deleteComment } from "../services/comment-endpoints";
 import AnimationWrapper from "../common/page-animation";
 
 const addReplyToComments = (comments, comment_id, child) => {
@@ -24,6 +24,9 @@ const CommentCard = ({ comment, author, setComments }) => {
   const [showReply, setShowReply] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
   const [reply, setReply] = useState("");
+  const [liked, setLiked] = useState(
+    () => comment.activity.total_likes.includes(author._id) || false
+  );
 
   const toggleShowReplies = () => {
     setShowReplies((prev) => !prev);
@@ -33,7 +36,30 @@ const CommentCard = ({ comment, author, setComments }) => {
     setShowReply((prev) => !prev);
   };
 
-  const handleLike = () => {};
+  // [TODO] Implement like and dislike functionality
+  // const handleLike = () => {
+  //   if (liked) {
+  //     toggleLikeCommentOrReply({ id: comment._id, action: "dislike" }).then(
+  //       (d) => {
+  //         console.log({
+  //           message: "Disliked",
+  //           data: d,
+  //         });
+  //       }
+  //     );
+
+  //     toast.success("Disliked");
+  //   } else {
+  //     toggleLikeCommentOrReply({ id: comment._id }).then((d) => {
+  //       console.log({
+  //         message: "Liked",
+  //         data: d,
+  //       });
+  //     });
+  //     toast.success("Liked");
+  //   }
+  //   setLiked((prev) => !prev);
+  // };
 
   const submitReply = async () => {
     try {
@@ -61,6 +87,19 @@ const CommentCard = ({ comment, author, setComments }) => {
     }
   };
 
+  const handleDeleteComment = async () => {
+    try {
+      await deleteComment({ id: comment._id });
+      setComments((prev) => ({
+        comments: prev.comments.filter((item) => item._id !== comment._id),
+        pagination: prev.pagination, // [TODO] pagination will not accurately reflect the number of comments
+      }));
+      toast.success("Comment Deleted");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AnimationWrapper>
       <div
@@ -79,9 +118,16 @@ const CommentCard = ({ comment, author, setComments }) => {
           </div>
 
           <div className="comment-card_header-options absolute top-[1vw] right-[2vw]">
-            <button>
+            <button className="mx-4">
               <i className="fi fi-rr-menu-dots"></i>
             </button>
+
+            {comment?.commented_by?.personal_info?.fullname ===
+              author?.fullname && (
+              <button onClick={handleDeleteComment}>
+                <i className="fi fi-rr-trash"></i>
+              </button>
+            )}
           </div>
         </div>
 
@@ -93,9 +139,15 @@ const CommentCard = ({ comment, author, setComments }) => {
         <hr className="border-b border-grey" />
 
         <div className="comment-card_footer flex items-center gap-4 p-4 justify-between">
-          <div className="flex gap-4 items-center" onClick={handleLike}>
+          <div className="flex gap-4 items-center">
             <button className="text-lg font-bold text-dark-grey">
-              <i className="fi fi-rr-hands-clapping text-2xl"></i> 5
+              <i
+                className={clsx({
+                  "fi fi-rr-hands-clapping text-2xl": true,
+                  "text-orange-300 bg-orange-400/80": liked,
+                })}
+              ></i>{" "}
+              5
             </button>
             <button
               className="text-lg font-bold text-dark-grey ml-4"

@@ -38,4 +38,9 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 
 ## Some Refactors
 
-1. Done Pagination for Comments and Show/Hide Replies
+1. Done Pagination for Comments and Show/Hide Replies [DONE]
+
+##### TODO
+
+1. Replace returning whole replies for each comment with return as demand (lazy loading)
+   1. when press 'load reply' button, then fetch replies from api (iam using eager loading now)

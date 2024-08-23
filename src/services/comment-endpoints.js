@@ -50,9 +50,35 @@ export const createReply = async ({ comment_id, data }) => {
   }
 };
 
-export const likeCommentOrReply = async ({ id }) => {
+export const deleteComment = async ({ id }) => {
   try {
+    const response = await endpoint.delete(`/comments/${id}`, {
+      headers: {
+        Authorization: `Bearer ${lookInSession("user").token}`,
+      },
+    });
+
+    console.log(response.data);
   } catch (error) {
     console.log(error);
   }
 };
+
+// [TODO]
+// export const toggleLikeCommentOrReply = async ({ id, action = "like" }) => {
+//   try {
+//     const response = await endpoint.post(
+//       `/comments/${id}/${action}`,
+//       {},
+//       {
+//         headers: {
+//           Authorization: `Bearer ${lookInSession("user").token}`,
+//         },
+//       }
+//     );
+
+//     return response.data.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
