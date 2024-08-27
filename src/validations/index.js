@@ -31,3 +31,8 @@ export const blogSchema = yup.object().shape({
 export const saveToDraftSchema = yup.object().shape({
   title: yup.string().min(3).max(100).required(),
 });
+
+export const changePassword = yup.object().shape({
+  "current-password": yup.string().required(),
+  "new-password": yup.string().required(),
+});

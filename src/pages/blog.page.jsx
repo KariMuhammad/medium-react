@@ -16,7 +16,7 @@ const BlogStructure = {
   description: "",
   content: [],
   tags: [],
-  author: { personal_info: {} },
+  author: {},
   comments: [],
   banner: "",
   publishedAt: "",
@@ -73,16 +73,8 @@ const Blog = () => {
 
   if (!blog.title) return <Loader />;
 
-  const {
-    title,
-    description,
-    content,
-    banner,
-    author: {
-      personal_info: { fullname, username, profile_img, bio },
-    },
-    publishedAt,
-  } = blog;
+  const { title, description, banner, author, publishedAt } = blog;
+  const { fullname, username, profile_img, bio } = author || {};
 
   if (_ == 0) {
     triggerReRender();

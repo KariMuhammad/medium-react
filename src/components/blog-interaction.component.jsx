@@ -9,11 +9,11 @@ import BlogOptions from "./mini/blog-options.component";
 const BlogInteraction = () => {
   const { user } = useAuth();
   const blogDetails = useBlogDetails();
-  console.log("Blog Details", blogDetails);
 
   const isAuthor =
-    user.user.personal_info.username ===
-    blogDetails.blog.author.personal_info.username;
+    user.user.username === blogDetails.blog.author.personal_info.username;
+
+  console.log("isAuthor", isAuthor);
 
   const handleComment = () => {
     blogDetails.setCommentPanel((prev) => !prev);

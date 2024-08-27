@@ -1,5 +1,4 @@
 import date from "date-and-time";
-import { Link } from "react-router-dom";
 
 const BlogPostCard = ({ content, author }) => {
   const {
@@ -10,7 +9,7 @@ const BlogPostCard = ({ content, author }) => {
     tags,
     activity: { total_likes },
   } = content;
-  const { fullname, profile_img, username } = author;
+  const { fullname, profile_img } = author || {};
 
   const formatedDate = date.format(new Date(publishedAt), "MMM DD");
   return (

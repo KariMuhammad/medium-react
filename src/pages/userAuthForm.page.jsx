@@ -7,7 +7,7 @@ import AnimationWrapper from "../common/page-animation";
 import { loginSchema, signupSchema } from "../validations";
 
 import useAuthAction from "../hooks/use-auth-action";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { handleAuthGoogle } from "../common/firebase";
 
@@ -62,7 +62,6 @@ const UserAuthForm = ({ type }) => {
   return (
     <AnimationWrapper keyDiff={type}>
       <section className="h-cover flex items-center justify-center">
-        <Toaster />
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="w-[80%] max-w-[400px]"

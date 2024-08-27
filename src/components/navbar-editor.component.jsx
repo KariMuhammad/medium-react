@@ -24,7 +24,7 @@ export default function NavbarEditor() {
           setEditorMode("publish");
         })
         .catch((error) => {
-          console.dir(error);
+          console.error(error);
           toast.dismiss();
           toast.error(error.message);
         });

@@ -18,8 +18,9 @@ export const createBlog = async (blog) => {
       },
     });
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch ({ response }) {
+    console.log(response);
+    throw response;
   }
 };
 

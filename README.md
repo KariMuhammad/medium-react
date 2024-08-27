@@ -34,6 +34,12 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 - Edit Article
 - ![alt text](demo/edit-article.png)
 - List of articles
+- Settings / Dashboard
+  - Change Password
+  - ![alt text](demo/change-password.png)
+  - ![alt text](demo/change-password-success-1.png)
+  - Update Profile Image
+  - ![alt text](demo/upload-profile-image.png)
 - Pagination
 
 ## Some Refactors

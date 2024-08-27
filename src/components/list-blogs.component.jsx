@@ -24,7 +24,7 @@ const ListBlogs = ({
             transition={{ delay: i * 0.1 }}
           >
             <Link to={`/blog/${blog.blog_id}`} className="blog-link">
-              <BlogPostCard content={blog} author={blog.author.personal_info} />
+              <BlogPostCard content={blog} author={blog.author} />
             </Link>
           </AnimationWrapper>
         ))}

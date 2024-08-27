@@ -1,12 +1,9 @@
 import date from "date-and-time";
 
 const MinimalBlogCard = ({ blog, index }) => {
-  const {
-    title,
-    publishedAt,
-    author: { personal_info },
-    blog_id: id,
-  } = blog;
+  const { title, publishedAt, author, blog_id: id } = blog;
+
+  const { fullname, profile_img } = author || {};
 
   return (
     <div className="flex gap-4 border-b border-grey my-6 mb-6">
@@ -14,12 +11,9 @@ const MinimalBlogCard = ({ blog, index }) => {
 
       <div className="w-full">
         <header className="flex gap-2 items-center">
-          <img
-            src={personal_info.profile_img}
-            className="w-6 h-6 rounded-full"
-          />
+          <img src={profile_img} className="w-6 h-6 rounded-full" />
 
-          <p>{personal_info.fullname}</p>
+          <p>{fullname}</p>
         </header>
 
         <main className="my-6">

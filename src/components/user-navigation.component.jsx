@@ -19,11 +19,11 @@ const UserNavigationPanel = () => {
       className="absolute top-full left-0 w-full bg-white border border-grey rounded-b-lg"
     >
       <div>
-        <Link to="/account" className="block p-2">
+        <Link to="/settings" className="block p-2">
           Account
         </Link>
 
-        <Link to="/account/settings" className="block p-2">
+        <Link to="/settings/edit-profile" className="block p-2">
           Settings
         </Link>
 
@@ -33,7 +33,7 @@ const UserNavigationPanel = () => {
         >
           <h4 className="text-left p-2 text-lg">Sign out</h4>
           <span className="text-dark-grey text-sm overflow-hidden text-ellipsis whitespace-nowrap">
-            @{user.user.personal_info.username}
+            @{user.user.username}
           </span>
         </button>
       </div>

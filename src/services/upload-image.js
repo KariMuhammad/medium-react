@@ -22,7 +22,7 @@ const uploadImage = async (imageFile) => {
       });
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 
   return url;

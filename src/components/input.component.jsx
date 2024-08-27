@@ -10,6 +10,7 @@ const InputBox = (
     id,
     icon,
     errorMessage,
+    disabled,
     ...props
   },
   ref
@@ -34,6 +35,7 @@ const InputBox = (
           defaultValue={value}
           placeholder={placeholder}
           id={id}
+          disabled={disabled}
           className={`input-box ${className}`}
           {...props}
         />

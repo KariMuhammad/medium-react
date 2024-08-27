@@ -80,7 +80,7 @@
     }
 
     .sidebar-link {
-        @apply flex gap-4 items-center py-5 text-dark-grey hover:text-black;
+        @apply flex gap-4 items-center py-2 text-dark-grey hover:text-black;
     }
 
     .sidebar-link.active {

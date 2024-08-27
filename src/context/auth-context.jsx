@@ -2,15 +2,27 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { flashSession, lookInSession, storeInSession } from "../common/session";
 
+const authContextStructure = {
+  user: {
+    token: "",
+    user: { fullname: "", email: "", username: "", profile_img: "" },
+  },
+};
+
 export const AuthContext = createContext({
-  user: {},
-  syncUser: () => {},
+  user: {
+    token: "",
+    user: { fullname: "", email: "", username: "", profile_img: "" },
+  },
+  syncUser: (user) => {},
   unsyncUser: () => {},
 });
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(() => lookInSession("user") || null);
+  const [user, setUser] = useState(
+    () => lookInSession("user") || authContextStructure
+  );
 
   const syncUser = (user) => {
     setUser(user);
@@ -28,7 +40,7 @@ const AuthProvider = ({ children }) => {
     if (_user) setUser(_user);
 
     console.log("user", _user);
-    if (!_user) return navigate("/auth/sign-in");
+    if (_user && !_user?.token) return navigate("/auth/sign-in");
   }, []);
 
   return (

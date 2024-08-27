@@ -9,6 +9,9 @@ import SearchPage from "./pages/search.page";
 import NotFoundPage from "./pages/404.page";
 import UserProfile from "./pages/profile.page";
 import Blog from "./pages/blog.page";
+import Settings from "./pages/settings-page";
+import ChangePasswordPage from "./pages/change-password.page";
+import ProfileEditor from "./pages/edit-profile.page";
 
 const App = () => {
   return (
@@ -30,6 +33,13 @@ const App = () => {
 
           <Route path="user/:userId" element={<UserProfile />} />
           <Route path="blog/:id" element={<Blog />} />
+
+          <Route path="settings" element={<AuthLayout />}>
+            <Route path="" element={<Settings />}>
+              <Route path="edit-profile" element={<ProfileEditor />} />
+              <Route path="change-password" element={<ChangePasswordPage />} />
+            </Route>
+          </Route>
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>

@@ -4,7 +4,10 @@ const blogDetailsStructure = {
   blog: {
     blog_id: "",
     author: {
-      personal_info: { fullname: "", username: "", profile_img: "", bio: "" },
+      fullname: "",
+      username: "",
+      profile_img: "",
+      bio: "",
     },
     activity: {},
   },

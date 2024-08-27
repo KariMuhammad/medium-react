@@ -3,7 +3,7 @@ import { useBlog } from "../context/blog-context";
 import AnimationWrapper from "../common/page-animation";
 import Tag from "./tags.component";
 import { createBlog } from "../services/blog-endpoints";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const PublishForm = () => {
   const navigate = useNavigate();
@@ -67,9 +67,12 @@ const PublishForm = () => {
       setTimeout(() => {
         navigate("/");
       }, 500);
-    } catch ({ response }) {
-      console.log(response);
+    } catch (response) {
       toast.dismiss(publishLoading);
+      if (typeof response.data.errors.message == "string") {
+        return toast.error(response.data.errors.message);
+      }
+
       response.data.errors.message.forEach((error) => {
         toast.error(Object.values(error)[0]);
       });
@@ -78,6 +81,7 @@ const PublishForm = () => {
 
   return (
     <AnimationWrapper>
+      <Toaster />
       <section className="grid items-center w-screen h-screen md:grid-cols-2 gap-8">
         <div className="blog-preview bg-grey p-4 rounded-md overflow-hidden">
           <img src={banner} />

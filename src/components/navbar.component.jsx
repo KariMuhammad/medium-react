@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/auth-context";
 import logo from "../imgs/logo.png";
 
 import UserNavigationPanel from "./user-navigation.component";
-import { search } from "../services/blog-endpoints";
 
 const Navbar = () => {
   const authContext = useAuth();
@@ -19,7 +18,6 @@ const Navbar = () => {
   };
 
   const togglePanel = () => setVisibleUserPanel((state) => !state);
-  const hidePanel = () => setVisibleUserPanel(false);
 
   const handleSearch = (e) => {
     const query = e.target.value;
@@ -30,7 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar z-50">
       <Link to="/" className="flex-none w-10">
         <img src={logo} className="w-full" />
       </Link>
@@ -77,7 +75,7 @@ const Navbar = () => {
             >
               <img
                 className="w-full h-full object-cover"
-                src={authContext.user.user.personal_info.profile_img}
+                src={authContext.user.user.profile_img}
               />
 
               {visibleUserPanel && <UserNavigationPanel />}
