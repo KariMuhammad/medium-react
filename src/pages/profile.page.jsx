@@ -61,6 +61,8 @@ const UserProfile = () => {
     // blogs,
   } = profileData || UserStructure;
 
+  console.log(social_links);
+
   return (
     <AnimationWrapper>
       <section className="flex flex-col flex-col-reverse md:flex-row md:gap-16">

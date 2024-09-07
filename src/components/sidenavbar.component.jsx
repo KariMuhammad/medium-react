@@ -1,7 +1,12 @@
 import clsx from "clsx";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/auth-context";
 
 const SideNavbar = ({ showSidebar }) => {
+  const {
+    user: { notifications_available },
+  } = useAuth();
+
   return (
     <div
       className={clsx({
@@ -28,9 +33,15 @@ const SideNavbar = ({ showSidebar }) => {
                   <span>Comments</span>
                 </NavLink>
 
-                <NavLink to="/dashboard/notifications" className="sidebar-link">
+                <NavLink
+                  to="/dashboard/notifications"
+                  className="sidebar-link relative"
+                >
                   <i className="fi fi-rr-bell"></i>
                   Notifications
+                  {notifications_available && (
+                    <span className="absolute left-2 top-2 w-3 h-3 rounded-full bg-red"></span>
+                  )}
                 </NavLink>
               </nav>
             </div>

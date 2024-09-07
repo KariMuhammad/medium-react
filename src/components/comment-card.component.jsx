@@ -4,6 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { createReply, deleteComment } from "../services/comment-endpoints";
 import AnimationWrapper from "../common/page-animation";
+import { useAuth } from "../context/auth-context";
 
 const addReplyToComments = (comments, comment_id, child) => {
   return comments.map((item) => {
@@ -21,6 +22,11 @@ const addReplyToComments = (comments, comment_id, child) => {
 };
 
 const CommentCard = ({ comment, author, setComments }) => {
+  const {
+    user: {
+      user: { fullname: authorBlog },
+    },
+  } = useAuth();
   const [showReply, setShowReply] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
   const [reply, setReply] = useState("");
@@ -100,6 +106,8 @@ const CommentCard = ({ comment, author, setComments }) => {
     }
   };
 
+  console.log(authorBlog);
+
   return (
     <AnimationWrapper>
       <div
@@ -122,8 +130,7 @@ const CommentCard = ({ comment, author, setComments }) => {
               <i className="fi fi-rr-menu-dots"></i>
             </button>
 
-            {comment?.commented_by?.personal_info?.fullname ===
-              author?.fullname && (
+            {authorBlog && authorBlog === author?.fullname && (
               <button onClick={handleDeleteComment}>
                 <i className="fi fi-rr-trash"></i>
               </button>

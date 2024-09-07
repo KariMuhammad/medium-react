@@ -22,6 +22,12 @@ const CommentWrapper = () => {
     getComments({ blog_id: blog._id }).then((data) => {
       setData(data);
     });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape") {
+        setCommentPanel(false);
+      }
+    })
   }, []);
 
   console.log("Data", data);

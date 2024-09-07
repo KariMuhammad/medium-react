@@ -9,7 +9,7 @@ const AboutUser = ({ bio, social_links, joinedAt, isHide = true }) => {
         <p className="text-center md:text-left line-clamp-3">{bio}</p>
       </div>
 
-      {social_links.length > 0 && (
+      {Object.keys(social_links).length > 0 && (
         <div className="user-info__social">
           <h3>Social Links</h3>
           <div className="links leading-10 flex gap-4 justify-center">

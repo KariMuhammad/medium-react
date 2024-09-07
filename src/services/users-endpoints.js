@@ -40,15 +40,19 @@ export const updatedProfileImageUser = async (image) => {
   }
 };
 
-export const updateProfileUser = async (data = {}) => {
+export const updateProfileUser = async (formData) => {
   try {
-    const updatedData = await endpoint.patch(`/auth/profile/edit`, data, {
-      headers: {
-        Authorization: `Bearer ${lookInSession("user").token}`,
-      },
-    });
+    const response = await endpoint.patch(
+      `/auth/profile/edit`,
+      { ...formData },
+      {
+        headers: {
+          Authorization: `Bearer ${lookInSession("user").token}`,
+        },
+      }
+    );
 
-    return updatedData;
+    return response.data;
   } catch ({ response }) {
     console.log(response.data);
     throw response;

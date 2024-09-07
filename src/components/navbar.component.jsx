@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/auth-context";
 import logo from "../imgs/logo.png";
 
 import UserNavigationPanel from "./user-navigation.component";
+import { getNotificationStatus } from "../services/notification-endpoints";
 
 const Navbar = () => {
   const authContext = useAuth();
@@ -26,6 +27,18 @@ const Navbar = () => {
       navigate(`/search?q=${query}`);
     }
   };
+
+  useEffect(() => {
+    if (authContext.user && authContext.user.token)
+      getNotificationStatus(authContext.user.token).then((data) => {
+        authContext.syncUser({
+          ...authContext.user,
+          notifications_available: data.new_notifications,
+        });
+      });
+  }, [authContext.user?.token]);
+
+  const { notifications_available } = authContext.user || {};
 
   return (
     <nav className="navbar z-50">
@@ -61,10 +74,14 @@ const Navbar = () => {
           <p>Write</p>
         </Link>
 
-        {authContext.user ? (
+        {authContext.user?.token ? (
           <>
-            <Link to="/account/notifications" className="block link">
+            <Link to="/dashboard/notifications" className="block link relative">
               <i className="fi fi-rr-bell"></i>
+
+              {notifications_available && (
+                <span className="absolute right-2 top-2 w-3 h-3 rounded-full bg-red"></span>
+              )}
             </Link>
 
             <div

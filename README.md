@@ -19,32 +19,36 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 - Authorization (only authenticated users can create articles)
 - Create articles
   - Add images to articles (stored in AWS S3)
-  - Rich text editor (using Editor.js) -![alt text](demo/empty-blog.png)
-  - ![alt text](demo/blog.png)
+  - Rich text editor (using Editor.js) -![Create Blog Page](demo/empty-blog.png)
+  - ![Blog Page](demo/blog.png)
 - Home page
-- ![alt text](demo/home.png)
+- ![Home Page](demo/home.png)
 - Search Page (User & Articles)
-- ![alt text](demo/search.png)
+- ![Search Page](demo/search.png)
 - Profile User (Follow, Unfollow, Edit Profile)
-- ![alt text](demo/userpage.png)
+- ![Profile User](demo/userpage.png)
 - Article Page (Like [done], Comment[almost done], Bookmark[working])
 - Comment on Article
-- ![alt text](demo/comment.png)
-- ![alt text](demo/article.png)
+- ![Comment System](demo/comment.png)
+- ![Read Article](demo/article.png)
 - Edit Article
-- ![alt text](demo/edit-article.png)
+- ![Edit Article](demo/edit-article.png)
 - List of articles
 - Settings / Dashboard
   - Change Password
-  - ![alt text](demo/change-password.png)
-  - ![alt text](demo/change-password-success-1.png)
+  - ![Change Password with Errors](demo/change-password.png)
+  - ![Change Password with Success](demo/change-password-success-1.png)
   - Update Profile Image
-  - ![alt text](demo/upload-profile-image.png)
+  - ![Upload Profile Image](demo/upload-profile-image.png)
+- Notification Page (Reply, Seen, Unssen) + Pagination
+- ![alt text](demo/new-notification-1.png)
+- ![alt text](demo/pagination-notification.png)
 - Pagination
 
 ## Some Refactors
 
 1. Done Pagination for Comments and Show/Hide Replies [DONE]
+2. Props Drilling converted to Context API or Redux [] (I will use Redux)
 
 ##### TODO
 

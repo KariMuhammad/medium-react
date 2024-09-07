@@ -19,7 +19,7 @@ const UserNavigationPanel = () => {
       className="absolute top-full left-0 w-full bg-white border border-grey rounded-b-lg"
     >
       <div>
-        <Link to="/settings" className="block p-2">
+        <Link to={`/user/${user.user.username}`} className="block p-2">
           Account
         </Link>
 
