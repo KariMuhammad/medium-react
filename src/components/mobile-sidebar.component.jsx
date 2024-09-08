@@ -25,7 +25,7 @@ const MobileSidebar = ({ setShowSidebar }) => {
 
   return (
     <div
-      className="sidebar-menu-mobile block md:hidden relative mb-10"
+      className="sidebar-menu-mobile block md:hidden relative mb-5"
       onClick={handlePageChange(activePage)}
     >
       <button className="my-4 mr-4" ref={sidebarIconRef}>

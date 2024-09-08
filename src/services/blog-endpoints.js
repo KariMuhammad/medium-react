@@ -155,3 +155,18 @@ export const unlikeBlog = async (blog_id) => {
     throw error;
   }
 };
+
+export const deleteBlog = async (blog_id) => {
+  try {
+    const response = await endpoint.delete(`/blogs/${blog_id}`, {
+      headers: {
+        Authorization: `Bearer ${lookInSession("user").token}`,
+      },
+    });
+
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

@@ -30,9 +30,9 @@ const BlogPostCard = ({ content, author }) => {
         </p>
 
         <div className="flex gap-4 items-center my-4">
-          <p className="min-w-fit text-sm">{formatedDate}</p>
+          <p className="min-w-fit text-sm text-dark-grey">{formatedDate}</p>
           {tags[0] && <p className="btn-light py-1 px-4">{tags[0]}</p>}
-          <p className="flex items-center gap-4">
+          <p className="flex items-center gap-4 text-black">
             <i className="fi fi-rr-heart"></i>
             {total_likes}
           </p>

@@ -1,21 +1,26 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useBlog } from "../context/blog-context";
 import AnimationWrapper from "../common/page-animation";
 import Tag from "./tags.component";
-import { createBlog } from "../services/blog-endpoints";
+import { createBlog, updateBlog } from "../services/blog-endpoints";
 import toast, { Toaster } from "react-hot-toast";
 
 const PublishForm = () => {
+  const location = useLocation();
+
   const navigate = useNavigate();
   const charactersLimit = 200;
   const tagsLimit = 10;
 
   const {
     blog,
-    blog: { title, banner, description, tags },
+    blog: { title, banner, description, tags, blog_id },
     setBlog,
     setEditorMode,
   } = useBlog();
+
+  const isUpdate = location.pathname.includes(blog_id);
+  console.log(isUpdate);
 
   const handleTitleChange = (e) => {
     const element = e.target;
@@ -59,13 +64,21 @@ const PublishForm = () => {
     e.preventDefault();
     const publishLoading = toast.loading("Publishing blog...");
     try {
-      await createBlog(blog);
+      if (isUpdate)
+        // [TODO] - Convert draft to published and vice versa
+        // this is not optimal solution for convert draft to published at all!
+        // we should have a separate function for this or send additional parameter to the createBlog function
+        await updateBlog({
+          blog: { ...blog, draft: false },
+          blog_id: blog.blog_id,
+        });
+      else await createBlog(blog);
 
       toast.dismiss(publishLoading);
       toast.success("Blog published successfully");
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/dashboard/blogs");
       }, 500);
     } catch (response) {
       toast.dismiss(publishLoading);

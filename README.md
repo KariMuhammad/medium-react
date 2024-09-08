@@ -15,6 +15,7 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 
 ## Features
 
+- Dark/Light Mode
 - User authentication (login, register, logout) + (Register / Login with Google)
 - Authorization (only authenticated users can create articles)
 - Create articles
@@ -43,6 +44,8 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 - Notification Page (Reply, Seen, Unssen) + Pagination
 - ![alt text](demo/new-notification-1.png)
 - ![alt text](demo/pagination-notification.png)
+- Blogs Management (Delete, Edit, View, Stats)
+- ![alt text](demo/blogs-manage.png)
 - Pagination
 
 ## Some Refactors

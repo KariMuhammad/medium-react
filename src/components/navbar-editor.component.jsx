@@ -1,8 +1,10 @@
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { useBlog } from "../context/blog-context";
 import { blogSchema, saveToDraftSchema } from "../validations/index";
 import { createBlog, updateBlog } from "../services/blog-endpoints";
 export default function NavbarEditor() {
+  const navigate = useNavigate();
   const {
     blog,
     blog: { title, content, banner },
@@ -16,6 +18,8 @@ export default function NavbarEditor() {
   const handleSwitchPublishForm = async () => {
     // save blog editor content
     await blogEditor.save().then((outputData) => {
+      console.log("Editor", blogEditor);
+      console.log("Article data: ", outputData);
       setBlog((blog) => ({ ...blog, content: outputData.blocks }));
 
       blogSchema
@@ -45,6 +49,8 @@ export default function NavbarEditor() {
 
             await updateBlog({ blog: { ...blog, draft: "true" }, blog_id });
           } else await createBlog({ ...blog, draft: "true" });
+
+          navigate("/dashboard/blogs?tab=draft");
           toast.dismiss(loading);
           toast.success("Draft saved successfully");
         } catch ({ response }) {

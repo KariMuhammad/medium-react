@@ -3,10 +3,17 @@ import { useEffect, useRef, useState } from "react";
 
 export let activeButtonRef;
 
-const InPageNavigation = ({ headings, hiddens, children }) => {
+const InPageNavigation = ({
+  headings,
+  hiddens,
+  children,
+  defaultActive = 0,
+}) => {
+  const [width, setWidth] = useState(0);
+  const [eventAdded, setEventAdded] = useState(false);
   const borderRef = useRef();
   activeButtonRef = useRef();
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(defaultActive || 0);
   const handleChangeHeading = (btn, index) => {
     // get width of the button
     const width = btn.offsetWidth;
@@ -22,7 +29,21 @@ const InPageNavigation = ({ headings, hiddens, children }) => {
   };
 
   useEffect(() => {
-    handleChangeHeading(activeButtonRef.current, active);
+    console.log("active", active, "width", width);
+    handleChangeHeading(activeButtonRef.current, width >= 768 ? 0 : active);
+  }, [width]);
+
+  useEffect(() => {
+    if (eventAdded) return;
+
+    console.log("event added");
+
+    window.addEventListener("resize", () => {
+      console.log("resize" + window.innerWidth);
+      setWidth(window.innerWidth);
+    });
+
+    setEventAdded(true);
   }, []);
 
   // TODO: check if screen is back resized to large (border was active on mobile)

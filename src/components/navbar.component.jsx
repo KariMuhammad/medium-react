@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/auth-context";
@@ -6,11 +6,25 @@ import logo from "../imgs/logo.png";
 
 import UserNavigationPanel from "./user-navigation.component";
 import { getNotificationStatus } from "../services/notification-endpoints";
+import { themeContext } from "../App";
+import { storeInSession } from "../common/session";
 
 const Navbar = () => {
   const authContext = useAuth();
   const [visibleSearchBox, setVisibleSearchBox] = useState("hide");
   const [visibleUserPanel, setVisibleUserPanel] = useState(false);
+
+  const { theme, setTheme } = useContext(themeContext);
+
+  const changeTheme = () => {
+    setTheme((p) => (p === "light" ? "dark" : "light"));
+    storeInSession("theme", theme === "light" ? "dark" : "light");
+
+    document.body.setAttribute(
+      "data-theme",
+      theme === "light" ? "dark" : "light"
+    );
+  };
 
   const navigate = useNavigate();
 
@@ -43,7 +57,7 @@ const Navbar = () => {
   return (
     <nav className="navbar z-50">
       <Link to="/" className="flex-none w-10">
-        <img src={logo} className="w-full" />
+        <img src={logo} className={`logo ${theme === "dark" && "invert "}`} />
       </Link>
 
       <div
@@ -73,6 +87,10 @@ const Navbar = () => {
           <i className="fi fi-rr-file-edit"></i>
           <p>Write</p>
         </Link>
+
+        <button onClick={changeTheme} className="block btn-light relative">
+          <i className="fi fi-rr-moon"></i>
+        </button>
 
         {authContext.user?.token ? (
           <>

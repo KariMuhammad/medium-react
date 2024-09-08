@@ -52,19 +52,17 @@ export default function BlogEditor() {
   };
 
   useEffect(() => {
-    // if (blogEditor.isReady) return;
+    if (blogEditor.isReady) return;
 
     editor = new EditorJS({
       holder: "editor-content",
       placeholder: "Write something awesome...",
-      data: { blocks: content },
+      data: { blocks: content || [] },
       tools: tools,
     });
 
     setBlogEditor(editor);
-  }, []);
-
-  if (blog_id) editor?.isReady.then(() => editor.render({ blocks: content }));
+  }, [content, tools]);
 
   return (
     <section className="editor">
