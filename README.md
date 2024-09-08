@@ -57,3 +57,8 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 
 1. Replace returning whole replies for each comment with return as demand (lazy loading)
    1. when press 'load reply' button, then fetch replies from api (iam using eager loading now)
+
+# Some Bugs
+
+- Go back from "Save Draft", Editorjs doesn't show the content
+- When edit "draft blog" its content is not shown in the editorjs
