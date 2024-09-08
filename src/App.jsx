@@ -27,8 +27,8 @@ const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     const theme = lookInSession("theme");
-    document.body.setAttribute("data-theme", theme);
-    if (theme) {
+    if (theme !== null && theme !== "null") {
+      document.body.setAttribute("data-theme", theme);
       setTheme(theme);
     }
   }, []);
