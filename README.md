@@ -1,5 +1,7 @@
 # Intensive Medium Blog clone with React
 
+you can see the demo [here](https://mern-medium-blog.netlify.app/)
+
 ## Description
 
 This project is a clone of the Medium blog website. It is a full-stack project that uses React for the front-end and Node.js for the back-end. The project is a single-page application that allows users to to many features e.g (read articles, create articles, and follow other users, etc...). The project uses a RESTful API to communicate between the front-end and back-end.
@@ -12,6 +14,8 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 - MongoDB
 - JWT
 - AWS S3
+
+#### Deployed on _Netlify_
 
 ## Features
 
