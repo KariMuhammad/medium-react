@@ -10,7 +10,11 @@ const TrendBlogs = ({ trendingBlogs }) => {
         Trends <i className="fi fi-rr-arrow-trend-up text-3xl"></i>
       </h1>
 
-      {!trendingBlogs && <Loader />}
+      {!trendingBlogs && (
+        <div className="h3 text-center">
+          Fetching trending articles... <Loader />
+        </div>
+      )}
 
       {trendingBlogs &&
         trendingBlogs.length > 0 &&

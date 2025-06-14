@@ -11,6 +11,7 @@ import ListBlogs from "../components/list-blogs.component";
 import { readOnlyTools } from "../components/tools.component";
 import CommentWrapper from "../components/comments.component";
 import Output from "editorjs-react-renderer";
+import { useAuth } from "../context/auth-context";
 
 const BlogStructure = {
   title: "",
@@ -24,15 +25,14 @@ const BlogStructure = {
 };
 
 const Blog = () => {
+  const { user: auth, unsyncUser } = useAuth();
   const { id } = useParams();
   const blogContentRef = useRef(null);
   const [_, setRender] = useState(0);
   const [blog, setBlog] = useState(BlogStructure);
   const [similarBlogs, setSimilarBlogs] = useState([]);
-  const [userBlogs, setUserBlogs] = useState([]);
   const [commentPanel, setCommentPanel] = useState(true);
-
-  console.log("S", similarBlogs);
+  // const [userBlogs, setUserBlogs] = useState([]);
 
   const triggerReRender = () => {
     setRender((prev) => prev + 1);
@@ -59,29 +59,28 @@ const Blog = () => {
           });
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Get Blog By Slug Error ", error);
+          unsyncUser();
         });
     }
-
-    console.log("Blog Content", blog.content);
-
-    // if (blogContentRef.current) {
-    //   new Editor({
-    //     holder: blogContentRef.current,
-    //     readOnly: true,
-    //     data: blog.content[0],
-    //     tools: readOnlyTools,
-    //   });
-    // }
   }, [_]);
 
-  if (!blog.title)
+  if (!blog.title) {
     return (
       <div className="min-h-screen text-center py-10">
         <Loader />
         <h2 className="text-2xl text-dark-grey">Loading blog...</h2>
       </div>
     );
+  }
+
+  if (!auth.user.token) {
+    return (
+      <div className="min-h-screen text-center py-10">
+        <h2 className="text-2xl text-dark-grey">Please go sign-in first</h2>
+      </div>
+    );
+  }
 
   const { title, description, banner, author, publishedAt } = blog;
   const { fullname, username, profile_img, bio } = author || {};
@@ -128,17 +127,7 @@ const Blog = () => {
 
           <div id="blogcontent" ref={blogContentRef}>
             {blog && blog.content && blog.content[0] && (
-              <Output
-                data={blog.content[0]}
-                // Add custom renderers for CodeBox block
-                renderers={{
-                  codeBox: ({ data }) => (
-                    <pre className="bg-gray-100 p-4 rounded mb-4 overflow-x-auto">
-                      <code>{data.code}</code>
-                    </pre>
-                  ),
-                }}
-              />
+              <Output data={blog.content[0]} />
             )}
           </div>
 

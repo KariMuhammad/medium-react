@@ -29,7 +29,11 @@ const ListBlogs = ({
           </AnimationWrapper>
         ))}
 
-      {!blogs && <Loader />}
+      {!blogs && (
+        <div className="h3 text-center">
+          Fetching articles... <Loader />
+        </div>
+      )}
 
       {blogs && !blogs.length && (
         <NoDataMessage message="No blogs found for this tag" />

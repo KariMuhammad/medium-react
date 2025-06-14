@@ -15,6 +15,7 @@ export const AuthContext = createContext({
     token: "",
     user: { fullname: "", email: "", username: "", profile_img: "" },
   },
+
   syncUser: (user) => {},
   unsyncUser: () => {},
 });
@@ -65,7 +66,7 @@ const AuthProvider = ({ children }) => {
 
     console.log("user", _user);
     if (_user && !_user?.token) return navigate("/auth/sign-in");
-  }, []);
+  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user, syncUser, unsyncUser }}>
