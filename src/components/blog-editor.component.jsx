@@ -11,7 +11,7 @@ export let editor;
 export default function BlogEditor() {
   const {
     blog,
-    blog: { banner, title, content },
+    blog: { banner, title },
     setBlog,
     blogEditor,
     setBlogEditor,
@@ -19,6 +19,8 @@ export default function BlogEditor() {
   } = useBlog();
 
   console.log("ID", blog_id, "Blog", blog);
+  const { content } = blog;
+  console.log("Content", content);
 
   const uploadImageFile = (e) => {
     const file = e.target.files[0];
@@ -52,17 +54,22 @@ export default function BlogEditor() {
   };
 
   useEffect(() => {
-    if (blogEditor.isReady) return;
+    console.log("isReady", !!blogEditor.isReady);
 
     editor = new EditorJS({
       holder: "editor-content",
       placeholder: "Write something awesome...",
-      data: { blocks: content || [] },
+      data: content[0] || [],
       tools: tools,
+
+      onReady: () => {
+        console.log("[useEffect] Editor is ready");
+        setBlogEditor(editor);
+      },
     });
 
-    setBlogEditor(editor);
-  }, [content, tools]);
+    console.log("[useEffect] Content", blog, content);
+  }, [content]);
 
   return (
     <section className="editor">

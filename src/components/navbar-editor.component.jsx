@@ -7,20 +7,24 @@ export default function NavbarEditor() {
   const navigate = useNavigate();
   const {
     blog,
-    blog: { title, content, banner },
+    blog: { title, banner },
     setBlog,
     blogEditor,
     setEditorMode,
-
     blog_id, // this means that we will update not create the blog
   } = useBlog();
 
+  console.log("blogEditor", blogEditor);
+
   const handleSwitchPublishForm = async () => {
+    console.log("in Save BlogEditor", blogEditor);
     // save blog editor content
     await blogEditor.save().then((outputData) => {
       console.log("Editor", blogEditor);
       console.log("Article data: ", outputData);
-      setBlog((blog) => ({ ...blog, content: outputData.blocks }));
+      setBlog((blog) => {
+        return { ...blog, content: outputData };
+      });
 
       blogSchema
         .validate({ title, content: outputData.blocks, banner })

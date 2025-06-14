@@ -19,6 +19,8 @@ const PublishForm = () => {
     setEditorMode,
   } = useBlog();
 
+  console.log("Blog", blog);
+
   const isUpdate = location.pathname.includes(blog_id);
   console.log(isUpdate);
 
@@ -64,7 +66,8 @@ const PublishForm = () => {
     e.preventDefault();
     const publishLoading = toast.loading("Publishing blog...");
     try {
-      if (isUpdate)
+      if (isUpdate) {
+        console.log("Updaing Blog", blog);
         // [TODO] - Convert draft to published and vice versa
         // this is not optimal solution for convert draft to published at all!
         // we should have a separate function for this or send additional parameter to the createBlog function
@@ -72,7 +75,7 @@ const PublishForm = () => {
           blog: { ...blog, draft: false },
           blog_id: blog.blog_id,
         });
-      else await createBlog(blog);
+      } else await createBlog(blog);
 
       toast.dismiss(publishLoading);
       toast.success("Blog published successfully");

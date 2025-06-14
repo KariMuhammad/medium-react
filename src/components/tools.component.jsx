@@ -1,4 +1,4 @@
-import Code from "@editorjs/code";
+// import CodeBox from "@editorjs/code";
 import Embed from "@editorjs/embed";
 import Header from "@editorjs/header";
 import Image from "@editorjs/image";
@@ -42,12 +42,10 @@ const uploadImageByFile = (image) => {
 };
 
 const tools = {
-  code: {
+  codeBox: {
     class: CodeBox,
-    config: {
-      useDefaultTheme: "light",
-    },
   },
+
   embed: Embed,
   header: {
     class: Header,

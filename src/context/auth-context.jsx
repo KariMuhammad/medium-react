@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { flashSession, lookInSession, storeInSession } from "../common/session";
+import { getGuestToken } from "../services/auth-endpoints";
 
 const authContextStructure = {
   user: {
@@ -38,6 +39,29 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const _user = lookInSession("user");
     if (_user) setUser(_user);
+    else {
+      const getGuestUserToken = async () => {
+        try {
+          const response = await getGuestToken();
+          const guestUser = response.data;
+          console.log("guestUser", guestUser);
+
+          if (guestUser?.token) {
+            setUser(guestUser);
+            storeInSession("user", guestUser);
+          } else {
+            console.error("Failed to get guest user token");
+            navigate("/auth/sign-in");
+          }
+        } catch (error) {
+          console.error("Error fetching guest user token:", error);
+          flashSession();
+          navigate("/auth/sign-in");
+        }
+      };
+
+      getGuestUserToken();
+    }
 
     console.log("user", _user);
     if (_user && !_user?.token) return navigate("/auth/sign-in");

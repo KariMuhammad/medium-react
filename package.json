@@ -26,6 +26,7 @@
     "axios": "^1.4.0",
     "clsx": "^2.1.1",
     "date-and-time": "^3.5.0",
+    "editorjs-react-renderer": "^3.5.1",
     "editorjs-style": "^3.0.3",
     "firebase": "^10.12.5",
     "framer-motion": "^10.13.0",

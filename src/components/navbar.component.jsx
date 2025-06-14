@@ -103,7 +103,7 @@ const Navbar = () => {
             </Link>
 
             <div
-              className="block link h-14"
+              className="block link h-14 opacity-100"
               tabIndex={0}
               onClick={togglePanel}
               // onBlur={hidePanel}

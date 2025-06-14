@@ -13,6 +13,10 @@ export const postAuthFormData = (apiRoute, formData) => {
   return endpoint.post(`/auth${apiRoute}`, formData);
 };
 
+export const getGuestToken = () => {
+  return endpoint.get("/users/createGuestTokenIfNoSession");
+};
+
 export const changeUserPassword = (formData) => {
   return endpoint.post("/auth/change-password", formData, {
     headers: {

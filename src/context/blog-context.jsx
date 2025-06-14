@@ -6,7 +6,7 @@ const BlogStructure = {
     title: "",
     banner: "",
     description: "",
-    content: [], // editorjs content
+    content: {}, // editorjs content
     tags: [],
     personal_info: {
       author: [],
@@ -41,13 +41,13 @@ export default function BlogProvider({ value, children, blog_id = null }) {
 
     // fetch blog data from server
     getBlogBySlug(blog_id).then((data) => {
-      console.log("--", data.blog._doc);
+      console.log("Blog Document ", data.blog._doc);
 
       setBlog(data.blog._doc);
     });
   }, [blog_id]);
 
-  console.log(blog);
+  console.log("Blog ", blog);
 
   return (
     <BlogContext.Provider value={{ blog, setBlog, ...value }}>

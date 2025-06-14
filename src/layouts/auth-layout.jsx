@@ -6,6 +6,8 @@ export default function AuthLayout({ children }) {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  console.log("AuthLayout", user);
+
   useEffect(() => {
     if (!user) navigate("/auth/sign-in");
   }, [user]);

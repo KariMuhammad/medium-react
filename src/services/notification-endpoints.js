@@ -23,7 +23,7 @@ export async function getNotificationStatus(token) {
 }
 
 export async function fetchNotifications({ page = 1, token, filter }) {
-  const path = `/notifications?page=${page}`;
+  let path = `/notifications?page=${page}`;
   if (filter) path += `&type=${filter}`;
 
   try {

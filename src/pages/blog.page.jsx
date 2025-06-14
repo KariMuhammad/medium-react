@@ -10,6 +10,7 @@ import BlogInteraction from "../components/blog-interaction.component";
 import ListBlogs from "../components/list-blogs.component";
 import { readOnlyTools } from "../components/tools.component";
 import CommentWrapper from "../components/comments.component";
+import Output from "editorjs-react-renderer";
 
 const BlogStructure = {
   title: "",
@@ -46,7 +47,10 @@ const Blog = () => {
           console.log(data.blog);
 
           const blog = data.blog._doc;
-          setBlog({ ...blog, liked: data.blog.liked });
+          setBlog({
+            ...blog,
+            liked: data.blog.liked,
+          });
 
           getBlogsByTag({ tag: blog.tags, limit: 4 }).then((data) => {
             setSimilarBlogs(
@@ -59,19 +63,25 @@ const Blog = () => {
         });
     }
 
-    console.log(blog.content);
+    console.log("Blog Content", blog.content);
 
-    if (blogContentRef.current) {
-      new Editor({
-        holder: blogContentRef.current,
-        readOnly: true,
-        data: { blocks: blog.content },
-        tools: readOnlyTools,
-      });
-    }
+    // if (blogContentRef.current) {
+    //   new Editor({
+    //     holder: blogContentRef.current,
+    //     readOnly: true,
+    //     data: blog.content[0],
+    //     tools: readOnlyTools,
+    //   });
+    // }
   }, [_]);
 
-  if (!blog.title) return <Loader />;
+  if (!blog.title)
+    return (
+      <div className="min-h-screen text-center py-10">
+        <Loader />
+        <h2 className="text-2xl text-dark-grey">Loading blog...</h2>
+      </div>
+    );
 
   const { title, description, banner, author, publishedAt } = blog;
   const { fullname, username, profile_img, bio } = author || {};
@@ -116,7 +126,21 @@ const Blog = () => {
             <BlogInteraction />
           </div>
 
-          <div id="blogcontent" ref={blogContentRef}></div>
+          <div id="blogcontent" ref={blogContentRef}>
+            {blog && blog.content && blog.content[0] && (
+              <Output
+                data={blog.content[0]}
+                // Add custom renderers for CodeBox block
+                renderers={{
+                  codeBox: ({ data }) => (
+                    <pre className="bg-gray-100 p-4 rounded mb-4 overflow-x-auto">
+                      <code>{data.code}</code>
+                    </pre>
+                  ),
+                }}
+              />
+            )}
+          </div>
 
           <div className="blog-interaction">
             <BlogInteraction />
