@@ -74,13 +74,13 @@ const Blog = () => {
     );
   }
 
-  if (!auth.user.token) {
-    return (
-      <div className="min-h-screen text-center py-10">
-        <h2 className="text-2xl text-dark-grey">Please go sign-in first</h2>
-      </div>
-    );
-  }
+  // if (!auth.user.token) {
+  //   return (
+  //     <div className="min-h-screen text-center py-10">
+  //       <h2 className="text-2xl text-dark-grey">Please go sign-in first</h2>
+  //     </div>
+  //   );
+  // }
 
   const { title, description, banner, author, publishedAt } = blog;
   const { fullname, username, profile_img, bio } = author || {};
