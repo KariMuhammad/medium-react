@@ -64,5 +64,5 @@ This project is a clone of the Medium blog website. It is a full-stack project t
 
 # Some Bugs
 
-- Go back from "Save Draft", Editorjs doesn't show the content
-- When edit "draft blog" its content is not shown in the editorjs
+- Go back from "Save Draft", Editorjs doesn't show the content [solved]
+- When edit "draft blog" its content is not shown in the editorjs [solved]
