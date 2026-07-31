@@ -1,68 +1,110 @@
-# Intensive Medium Blog clone with React
+# Medium Lite
 
-you can see the demo [here](https://mern-medium-blog.netlify.app/)
+A responsive publishing client for writing, discovering, and discussing long-form articles. The React application connects to a REST API, uses Firebase for Google sign-in, and uploads article images through S3 presigned URLs.
 
-## Description
+[Live demo](https://mern-medium-blog.netlify.app/) · [Repository](https://github.com/KariMuhammad/medium-react)
 
-This project is a clone of the Medium blog website. It is a full-stack project that uses React for the front-end and Node.js for the back-end. The project is a single-page application that allows users to to many features e.g (read articles, create articles, and follow other users, etc...). The project uses a RESTful API to communicate between the front-end and back-end.
+## Highlights
 
-## Technologies
+- Email/password and Google authentication
+- Rich article editing with Editor.js blocks, embeds, code, lists, quotes, and inline formatting
+- Direct image uploads to AWS S3 through backend-generated presigned URLs
+- Article discovery, trending content, tag filters, and user/article search
+- Profiles with follow/unfollow actions and editable personal/social information
+- Likes, comments, replies, and paginated notifications
+- Draft and published-article management with edit, delete, and statistics views
+- Responsive layouts, route guards, loading states, validation, and toast feedback
 
-- React
+## Screenshots
+
+| Home | Editor | Article |
+| --- | --- | --- |
+| ![Home page](demo/home.png) | ![Article editor](demo/blog.png) | ![Published article](demo/article.png) |
+
+| Profile | Comments | Notifications |
+| --- | --- | --- |
+| ![User profile](demo/userpage.png) | ![Comment thread](demo/comment.png) | ![Notifications](demo/new-notification-1.png) |
+
+More UI captures are available in [`demo/`](demo/).
+
+## Tech Stack
+
+- React 18 and React Router
+- Vite 4
 - Tailwind CSS
-- Node.js/Express
-- MongoDB
-- JWT
-- AWS S3
+- Axios
+- Firebase Authentication
+- Editor.js and `editorjs-react-renderer`
+- React Hook Form and Yup
+- Framer Motion
 
-#### Deployed on _Netlify_
+## Getting Started
 
-## Features
+### Prerequisites
 
-- Dark/Light Mode
-- User authentication (login, register, logout) + (Register / Login with Google)
-- Authorization (only authenticated users can create articles)
-- Create articles
-  - Add images to articles (stored in AWS S3)
-  - Rich text editor (using Editor.js) -![Create Blog Page](demo/empty-blog.png)
-  - ![Blog Page](demo/blog.png)
-- Home page
-- ![Home Page](demo/home.png)
-- Search Page (User & Articles)
-- ![Search Page](demo/search.png)
-- Profile User (Follow, Unfollow, Edit Profile)
-- ![Profile User](demo/userpage.png)
-- Article Page (Like [done], Comment[almost done], Bookmark[working])
-- Comment on Article
-- ![Comment System](demo/comment.png)
-- ![Read Article](demo/article.png)
-- Edit Article
-- ![Edit Article](demo/edit-article.png)
-- List of articles
-- Settings / Dashboard
-  - Change Password
-  - ![Change Password with Errors](demo/change-password.png)
-  - ![Change Password with Success](demo/change-password-success-1.png)
-  - Update Profile Image
-  - ![Upload Profile Image](demo/upload-profile-image.png)
-- Notification Page (Reply, Seen, Unssen) + Pagination
-- ![alt text](demo/new-notification-1.png)
-- ![alt text](demo/pagination-notification.png)
-- Blogs Management (Delete, Edit, View, Stats)
-- ![alt text](demo/blogs-manage.png)
-- Pagination
+- Node.js 18+
+- npm
+- A compatible Medium Lite API
+- A Firebase web application with Google sign-in enabled
 
-## Some Refactors
+### Installation
 
-1. Done Pagination for Comments and Show/Hide Replies [DONE]
-2. Props Drilling converted to Context API or Redux [] (I will use Redux)
+```bash
+git clone https://github.com/KariMuhammad/medium-react.git
+cd medium-react
+npm install
+cp .env.example .env
+```
 
-##### TODO
+Configure `.env`:
 
-1. Replace returning whole replies for each comment with return as demand (lazy loading)
-   1. when press 'load reply' button, then fetch replies from api (iam using eager loading now)
+| Variable | Purpose |
+| --- | --- |
+| `VITE_SERVER_DOMAIN` | Base URL of the REST API, without a trailing slash |
+| `VITE_API_KEY` | Firebase web API key |
+| `VITE_AUTH_DOMAIN` | Firebase authentication domain |
+| `VITE_PROJECT_ID` | Firebase project ID |
+| `VITE_STORAGE_BUCKET` | Firebase storage bucket |
+| `VITE_MESSAGING_SENDER_ID` | Firebase messaging sender ID |
+| `VITE_APP_ID` | Firebase application ID |
 
-# Some Bugs
+Start the development server:
 
-- Go back from "Save Draft", Editorjs doesn't show the content [solved]
-- When edit "draft blog" its content is not shown in the editorjs [solved]
+```bash
+npm run dev
+```
+
+The Vite URL is printed in the terminal, normally `http://localhost:5173`.
+
+## Available Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start Vite in development mode |
+| `npm run build` | Create a production build in `dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint and fail on warnings |
+
+## Application Structure
+
+```text
+src/
+├── common/       # Firebase, sessions, dates, pagination, and shared helpers
+├── components/   # Editor, article, comment, navigation, and dashboard UI
+├── context/      # Authentication and article state providers
+├── hooks/        # Reusable application actions
+├── layouts/      # Public/authenticated layout shells
+├── pages/        # Route-level screens
+├── services/     # REST endpoint adapters and S3 upload flow
+└── validations/  # Form schemas
+```
+
+API calls are grouped by domain in `src/services/`. The image-upload service first requests a presigned URL from `GET /get-s3-url`, uploads the file to that URL, and then stores the resulting public object URL with the article.
+
+## Deployment
+
+The repository contains [`netlify.toml`](netlify.toml) for SPA routing on Netlify. Add the same environment variables from `.env` to the deployment provider before building.
+
+## Project Status
+
+The main publishing, profile, interaction, management, and notification flows are implemented. Future improvements noted in the codebase include loading comment replies on demand and consolidating additional shared state.
